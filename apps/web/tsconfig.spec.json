@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc/apps/web",
+    "types": ["jest", "node"],
+    "module": "commonjs"
+  },
+  "files": ["src/test-setup.ts"],
+  "include": ["**/*.spec.ts", "**/*.spec.tsx", "**/*.test.ts"],
+  "exclude": ["**/*.e2e-spec.ts"]
+}

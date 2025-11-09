@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: fullstack
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd="pg_isready -U postgres" --health-interval=10s --health-timeout=5s --health-retries=5
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/fullstack
+      JWT_SECRET: github-ci-secret
+      JWT_REFRESH_SECRET: github-ci-refresh
+      NX_SKIP_NX_CACHE: 1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - run: npm install
+      - run: npx prisma generate
+      - run: npx prisma migrate deploy || npx prisma db push
+      - run: npm run test
+      - run: nx e2e web-e2e --watch=false --browser=electron --headed=false
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-apps
+          path: |
+            dist/apps
+            dist/packages
+          if-no-files-found: warn

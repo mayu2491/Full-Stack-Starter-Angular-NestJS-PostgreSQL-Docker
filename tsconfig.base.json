@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM"],
+    "skipLibCheck": true,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@fullstack/types": ["packages/types/src/index.ts"],
+      "@fullstack/web/*": ["apps/web/src/app/*"],
+      "@fullstack/api/*": ["apps/api/src/app/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
