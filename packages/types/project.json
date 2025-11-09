@@ -1,0 +1,18 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "types",
+  "projectType": "library",
+  "sourceRoot": "packages/types/src",
+  "tags": ["scope:shared"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/types",
+        "tsConfig": "packages/types/tsconfig.lib.json",
+        "main": "packages/types/src/index.ts"
+      }
+    }
+  }
+}
